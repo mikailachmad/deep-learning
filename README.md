@@ -63,7 +63,7 @@ python src/train.py
 
 ## Penulis
 
-Nama: Mikail Achmad
-NIM: 24/542370/PA/23026
-Kelas: KOM - B
+Nama: Mikail Achmad  
+NIM: 24/542370/PA/23026  
+Kelas: KOM - B  
 Tugas: Pembelajaran Mesin Mendalam | Assignment 1 (Single Layer Perceptron)
