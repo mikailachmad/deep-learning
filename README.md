@@ -1,6 +1,6 @@
-# Single Layer Perceptron | Klasifikasi Biner Iris (Setosa vs Versicolor)
+# Single Layer Perceptron - Klasifikasi Biner Iris (Setosa vs Versicolor)
 
-Implementasi Python dari Single Layer Perceptron (SLP) untuk tugas mata kuliah #1 Pembelajaran Mesin Mendalam. Kode ini memakai langkah perhitungan yang ada di spreadsheet (forward pass, sigmoid, backpropagation, update bobot per sampel), termasuk skema pembagian data training & validasi per epoch, sehingga hasil akurasi & loss-nya sama dengan hasil yang ada di Sheet.
+Implementasi Python dari **Single Layer Perceptron (SLP)** untuk tugas mata kuliah Pembelajaran Mesin Mendalam. Kode ini mereplikasi persis logika perhitungan yang ada di spreadsheet (forward pass, sigmoid, backpropagation, update bobot per sampel), sehingga hasil akurasi & loss-nya **sama dengan hasil di spreadsheet**.
 
 ## Struktur Repo
 
@@ -10,20 +10,14 @@ slp-iris-classification/
 ├── requirements.txt
 ├── .gitignore
 ├── data/
-│   └── iris.csv              # 100 baris: 50 Iris-setosa + 50 Iris-versicolor
+│   └── PMM-TemplateSLP_update_fixed.xlsx   # sumber data (sheet "Data")
 ├── src/
-│   ├── data_loader.py        # load & susun urutan data training/validasi
-│   ├── model.py               # SLP: forward pass, sigmoid, backprop per sampel
-│   └── train.py               # loop training 5 epoch + validasi, simpan hasil
+│   └── train.py                 #  Kode untuk load data, model SLP, training loop, output
 └── outputs/
-    ├── results.csv            # rekap loss & akurasi per epoch (train & val)
-    ├── loss_chart.png         # grafik loss (dipakai di PPT halaman 5)
-    └── accuracy_chart.png     # grafik akurasi (dipakai di PPT halaman 3)
+    ├── results.csv              # rekap loss & akurasi per epoch (train & val)
+    ├── loss_chart.png           # grafik loss gabungan (train + val, 1 grafik)
+    └── accuracy_chart.png       # grafik akurasi gabungan (train + val, 1 grafik)
 ```
-
-Kenapa dipecah begini:
-
-- `data_loader.py` dan `model.py` dipisah agar logika data pada epoch tidak bercampur dengan logika matematika SLP sehingga mudah diperiksa saat ada yang beda dari spreadsheet.
 
 ## Cara menjalankan
 
@@ -34,36 +28,46 @@ pip install -r requirements.txt
 python src/train.py
 ```
 
+Data dibaca langsung dari file Excel (`data/PMM-TemplateSLP_update_fixed.xlsx`, sheet `Data`) pakai `pandas.read_excel`.
+
 ## Metodologi
 
 - **Bobot awal:** bias = teta1 = teta2 = teta3 = teta4 = 0.5
 - **Learning rate:** 0.1
 - **Aktivasi:** sigmoid, `g(z) = 1 / (1 + e^-z)`
 - **Update bobot:** per sampel (stochastic gradient descent), bukan per batch
-- **Training** (bobot berjalan menerus, tidak reset antar epoch):
-  - Epoch 1: 80 sampel (40 Setosa + 40 Versicolor)
-  - Epoch 2-5: 100 sampel/epoch, melanjutkan siklus 80 sampel core yang sama secara terus-menerus (tanpa reset di batas epoch)
-- **Validasi** (bobot dicabang dari bobot training di akhir epoch itu, lalu ikut terupdate sepanjang epoch validasi, tidak memengaruhi bobot training):
-  - Epoch 1 & 2: 20 sampel yang disisihkan dari training (10 Setosa + 10 Versicolor yang tidak dipakai training)
-  - Epoch 3-5: seluruh 100 sampel dataset
+
+### Pembagian data (split memakai pandas)
+
+Dataset (`sheet Data`, 100 baris) difilter berdasarkan label, lalu dislice:
+
+| Set        | Isi                                                                                       | Jumlah         |
+| ---------- | ----------------------------------------------------------------------------------------- | -------------- |
+| Training   | 40 Setosa pertama + 40 Versicolor pertama                                                 | 80 baris/epoch |
+| Validation | 10 Setosa berikutnya + 10 Versicolor berikutnya (held-out, tidak pernah dilihat training) | 20 baris/epoch |
+
+Set yang sama dipakai berulang di setiap 5 epoch.
+
+- **Training**: bobot berjalan menerus (tidak reset antar epoch), satu garis lurus gradient descent sepanjang 5×80 = 400 update.
+- **Validation**: bobot dicabang dari bobot training di akhir epoch itu, ikut terupdate sepanjang 20 sampel validasi epoch tsb, tapi tidak memengaruhi bobot training, setiap epoch validasi selalu mulai dari cabang baru.
 
 ## Hasil
 
 | Epoch | Train Loss | Train Acc | Val Loss | Val Acc |
 | ----- | ---------- | --------- | -------- | ------- |
 | 1     | 0.4499     | 52.5%     | 0.1001   | 85.0%   |
-| 2     | 0.0386     | 95.0%     | 0.0355   | 95.0%   |
-| 3     | 0.0176     | 98.0%     | 0.0110   | 99.0%   |
-| 4     | 0.0171     | 98.0%     | 0.0085   | 99.0%   |
-| 5     | 0.0081     | 100.0%    | 0.0072   | 100.0%  |
+| 2     | 0.0375     | 95.0%     | 0.0651   | 90.0%   |
+| 3     | 0.0244     | 97.5%     | 0.0458   | 95.0%   |
+| 4     | 0.0174     | 97.5%     | 0.0346   | 100.0%  |
+| 5     | 0.0127     | 98.75%    | 0.0278   | 100.0%  |
 
 ## Sumber data
 
-`data/iris.csv` diekspor dari sheet `Data` pada spreadsheet SLP (Iris dataset, subset Setosa & Versicolor saja untuk klasifikasi biner).
+`data/PMM-TemplateSLP_update_fixed.xlsx` : spreadsheet SLP awal (Iris dataset, subset Setosa & Versicolor untuk klasifikasi biner).
 
 ## Penulis
 
 Nama: Mikail Achmad  
 NIM: 24/542370/PA/23026  
 Kelas: KOM - B  
-Tugas: Pembelajaran Mesin Mendalam | Assignment 1 (Single Layer Perceptron)
+Tugas: Pembelajaran Mesin Mendalam — Assignment 1 (Single Layer Perceptron)
