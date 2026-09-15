@@ -4,12 +4,12 @@ Repo ini berisi seluruh tugas mata kuliah Pembelajaran Mesin Mendalam, masing-ma
 
 | Assignment | Topik                                                                   | Folder                            |
 | ---------- | ----------------------------------------------------------------------- | --------------------------------- |
-| 1          | Single Layer Perceptron — Klasifikasi biner Iris (Setosa vs Versicolor) | [`Assignment-1/`](./Assignment-1) |
+| 1          | Single Layer Perceptron — Klasifikasi biner Iris (Setosa vs Versicolor) | [`Assignment-1/`](https://github.com/mikailachmad/deep-learning/tree/main/Assignment%201) |
 
 Setiap folder assignment punya `README.md` sendiri dengan detail metodologi, cara menjalankan, dan hasilnya.
 
 ## Penulis
 
-Nama: Mikail Achmad
-NIM: 24/542370/PA/23026
-Kelas: KOM - B
+Nama: Mikail Achmad  
+NIM: 24/542370/PA/23026  
+Kelas: KOM - B  
