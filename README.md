@@ -6,6 +6,7 @@ Repo ini berisi seluruh tugas mata kuliah Pembelajaran Mesin Mendalam, masing-ma
 | ---------- | ------------------------------------------------------------------------ | ----------------------------------- |
 | 1          | Single Layer Perceptron \| Klasifikasi biner Iris (Setosa vs Versicolor) | [`Assignment 1/`](./Assignment%201) |
 | 2          | Klasifikasi MNIST dengan MLP (Keras) \| Regularization & Early Stopping  | [`Assignment 2/`](./Assignment%202) |
+| 3          | Poem Generation and Attention Code                                       | [`Assignment 3/`](./Assignment%203) |
 
 Setiap folder assignment punya `README.md` sendiri dengan detail metodologi, cara menjalankan, dan hasilnya.
 
